@@ -17,7 +17,7 @@
 <br>
 <%= form_tag do %>
 		<%= date_field_tag('trip_date', @date_start)%>
-		<%= number_field_tag('days', '8', in: 2...15) %>
+		<%= number_field_tag('days', '8', in: 2...16) %>
 		<%= email_field_tag('user_email', 'example@email.com')%>
 			<%= submit_tag 'GO!' %>
 <% end %>
@@ -25,4 +25,5 @@
 <%= @trip_date %> числа вы можете поехать на <%= @days%> ночей в следующие страны:
 <%= @letter_country %>
 <br>
-Данная информация отправлена по адресу <%= @user_email %>
+
+Информация отправлена по адресу <%= @user_email %>

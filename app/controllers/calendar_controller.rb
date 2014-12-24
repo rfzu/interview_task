@@ -42,7 +42,7 @@ class CalendarController < ApplicationController
     
     #collect data for mail
     @trip_date =   params[:trip_date]
-    @days = 3
+    @days ||= params[:days].to_i
     @user_email =   params[:user_email]
     @letter ||= {}
     @letter_country ||= []
