@@ -1,7 +1,5 @@
 <h1>Календарь полетов</h1>
 
-<%= params.inspect %>
-
 <%= form_tag do %>
 		<%= select_tag( 'dest_country', options_from_collection_for_select(@dest, :first, :last, '2'))%>
 			<%= submit_tag 'GO!' %>
@@ -13,7 +11,6 @@
 <br><br>
 
 Введите желаемую дату путешествия, длительность отдыха и email.
-Данные о возможных турах будут отправлены Вам по почте.
 <br>
 <%= form_tag do %>
 		<%= date_field_tag('trip_date', @date_start)%>
@@ -26,4 +23,3 @@
 <%= @letter_country %>
 <br>
 
-Информация отправлена по адресу <%= @user_email %>
