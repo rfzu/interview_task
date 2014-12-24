@@ -60,10 +60,7 @@ class CalendarController < ApplicationController
     @letter.each do |key,value|
       @letter_country << key if value['response'][0]['nights'].include?(@days) 
     end
-    
-    Countries2send.welcome.deliver_now
-
-    
+            
   end
 
 end
