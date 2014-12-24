@@ -1,0 +1,28 @@
+<h1>Календарь полетов</h1>
+
+<%= params.inspect %>
+
+<%= form_tag do %>
+		<%= select_tag( 'dest_country', options_from_collection_for_select(@dest, :first, :last, '2'))%>
+			<%= submit_tag 'GO!' %>
+<% end %>
+<br>
+Запрос по стране "<b><%= @dest[@dest_country] %></b>" на месяц вперед:
+<br><br>
+<%= @cal unless @cal.empty? %>
+<br><br>
+
+Введите желаемую дату путешествия, длительность отдыха и email.
+Данные о возможных турах будут отправлены Вам по почте.
+<br>
+<%= form_tag do %>
+		<%= date_field_tag('trip_date', @date_start)%>
+		<%= number_field_tag('days', '8', in: 2...15) %>
+		<%= email_field_tag('user_email', 'example@email.com')%>
+			<%= submit_tag 'GO!' %>
+<% end %>
+<br>
+<%= @trip_date %> числа вы можете поехать на <%= @days%> ночей в следующие страны:
+<%= @letter_country %>
+<br>
+Данная информация отправлена по адресу <%= @user_email %>
