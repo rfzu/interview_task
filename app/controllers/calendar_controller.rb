@@ -5,7 +5,7 @@ class CalendarController < ApplicationController
     @dest ||= destination_list
     @dest_country =   params[:dest_country]
     @date_start = Time.now.strftime("%Y.%m.%d")
-    @date_end = (Time.now + (60*60*24*31)).strftime("%Y.%m.%d")
+    @date_end = (Time.now + (60*60*24*37)).strftime("%Y.%m.%d")
     @city          =   'Moscow'
     @cal ||= calendar_data if @dest_country
     @trip_date =   params[:trip_date]

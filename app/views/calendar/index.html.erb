@@ -8,9 +8,19 @@
 <%= ' Запрос по стране "' if @dest[@dest_country] %> 
 <b><%= @dest[@dest_country] %></b>
 <%= '" на месяц вперед:' if @dest[@dest_country] %> 
-<br><br>
-<%= @cal if @cal %>
-<br><br>
+<br>
+
+<div id="calendar">
+		
+	<% if @cal %>
+		<%= calendarbuild @cal, @date_start.to_date do |date| %>
+		<b><%= date.day %></b>
+		<br><br>
+		<%= @cal[date.to_s].join(', ') if @cal && @cal[date.to_s] && @cal[date.to_s].any? %>
+		<% end %>
+	<% end %>
+</div>
+<br>
 
 Введите желаемую дату путешествия, длительность отдыха и email.
 <br>
