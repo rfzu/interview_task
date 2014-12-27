@@ -36,22 +36,16 @@ module CalendarHelper
 
     def day_classes(day)
       classes = []
-      p test_data[day.to_s] && test_data[day.to_s].any?
-      classes << "empty" unless test_data[day.to_s] && test_data[day.to_s].any?
-      p test_data[day.to_s].size if test_data[day.to_s]
+      classes << "noday" if day < date
+      classes << "empty" if test_data[day.to_s] && test_data[day.to_s].size == 0
       classes << "low" if test_data[day.to_s] && (1..2).include?(test_data[day.to_s].size)
       classes << "medium" if test_data[day.to_s] && test_data[day.to_s].size == 3
       classes << "hi" if test_data[day.to_s] && test_data[day.to_s].size > 3
-      #classes << "notmonth" if day.month != date.month
       classes.empty? ? nil : classes.join(" ")
     end
 
     def weeks
-      #first = date.beginning_of_month.beginning_of_week(START_DAY)
       first = date.beginning_of_week(START_DAY)
-      p first.class
-      p first
-      p first.next_day(31)
       last = date.next_day(31).end_of_week(START_DAY)
       (first..last).to_a.in_groups_of(7)
     end

@@ -2,25 +2,21 @@ class CalendarController < ApplicationController
   
   def index
 
-    @dest ||= destination_list
+    @dest = destination_list
     @dest_country =   params[:dest_country]
-    @date_start = Time.now.strftime("%Y.%m.%d")
-    @date_end = (Time.now + (60*60*24*37)).strftime("%Y.%m.%d")
+    @date_start = Time.now.strftime("%Y-%m-%d")
+    @date_end = (Time.now + (60*60*24*37)).strftime("%Y-%m-%d")
     @city          =   'Moscow'
-    @cal ||= calendar_data if @dest_country
+    @cal = calendar_data if @dest_country
     @trip_date =   params[:trip_date]
-    @days ||= params[:days].to_i
+    @days = params[:days].to_i
     @user_email =   params[:user_email]
 
-    #send_mail_list(@user_email, @trip_date, @days, destination_list) if @user_email
-
-    #CountryemailWorker.sendmaillist_async(@user_email, @trip_date, @days, @dest) if @user_email
-    HardWorker.perform_async(@user_email, @trip_date, @days, @dest) if @user_email
+    CountryMailWorker.perform_async(@user_email, @trip_date, @days, @dest) if @user_email
 
   end
 
   def destination_list
-    #get list of countries
     destinations = Typhoeus::Request.new(
     "https://level.travel/papi/references/countries",
     method: :get,
@@ -54,27 +50,6 @@ class CalendarController < ApplicationController
       cal[cal_json[i]['date']] = cal_json[i]['nights']
     end if cal_json
     cal
-  end
-
-  def send_mail_list(email, date, days, dest, city='Moscow')
-    letter ||= {}
-    letter_country ||= []
-
-    dest.each do |key, value|
-      req4mail = Typhoeus::Request.new(
-      "https://level.travel/papi/search/flights_and_nights?city_from=#{city}&country_to=#{key}&start_date=#{date}&end_date=#{date}&form=long",
-      method: :get,
-      headers: { Accept: "application/vnd.leveltravel.v2", Authorization: "Token token=f7bb8bac0a8893eb94b1b5f848e22876" }
-      )
-      req4mail.run if date
-      letter[value] = JSON[req4mail.response.body] if date
-    end
-
-    letter.each do |key,value|
-      letter_country << key if value['response'][0]['nights'].include?(@days) 
-    end
-
-    TripMailer.trip_letter(@user_email, letter_country, date, days).deliver if letter_country.any?
   end
 
 end

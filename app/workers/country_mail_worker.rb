@@ -1,4 +1,4 @@
-class HardWorker
+class CountryMailWorker
   include Sidekiq::Worker
 
   def perform(email, date, days, dest, city='Moscow')
