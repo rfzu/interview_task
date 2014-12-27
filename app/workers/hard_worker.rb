@@ -20,11 +20,6 @@ class HardWorker
     end
 
     TripMailer.trip_letter(email, letter_country, date, days).deliver if letter_country.any?
-    puts '============== hi! =============='
-    puts letter_country
-    puts email
-    puts date
-    puts days
-    puts letter_country.class
+    puts "mail delivered to #{email}"
   end
 end
