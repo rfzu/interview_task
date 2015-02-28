@@ -1,6 +1,6 @@
 == README
 
-Level.travel interview task
+interview task
 
 ==TODO
 
